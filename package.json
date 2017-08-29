@@ -1,0 +1,19 @@
+{
+  "name": "glutenblog-server",
+  "version": "1.0.0",
+  "description": "Server for GlutenBlog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thomas Karg",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "mongodb": "^2.2.31",
+    "q": "^1.5.0",
+    "rootpath": "^0.1.2"
+  }
+}
