@@ -1,5 +1,8 @@
 var express = require('express');
+var crypto = require('crypto');
+var mime = require('mime');
 var router = express.Router();
+var multer = require('multer')
 
 var recipesService = require('services/recipes.service');
 

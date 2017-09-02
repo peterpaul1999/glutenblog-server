@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 
 // routes
 app.use('/recipes', require('./controllers/recipes.controller'));
+app.use('/files', require('./controllers/upload.controller'));
 
 // start server
 var port = process.env.NODE_ENV === 'production' ? 80 : 4000;
