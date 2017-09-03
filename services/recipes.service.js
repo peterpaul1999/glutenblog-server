@@ -1,4 +1,5 @@
 var mongodb = require('mongodb');
+var serverConfig = require('../server.config');
 
 var Q = require('q');
 
@@ -8,7 +9,7 @@ var service = {};
 
 var MongoClient = mongodb.MongoClient
 
-MongoClient.connect('mongodb://Testuser:Test1234@ds157833.mlab.com:57833/meanstack', function(err, database) {
+MongoClient.connect(serverConfig.mongoDbConfig, function(err, database) {
     if (err) return console.log(err)
     db = database
 })
@@ -24,7 +25,7 @@ module.exports = service;
 function getAll() {
     var deferred = Q.defer();
 
-    db.collection('quotes').find().toArray(function(err, results) {
+    db.collection(serverConfig.recipesCollection).find().toArray(function(err, results) {
         deferred.resolve(results);
     })
     return deferred.promise;
@@ -33,7 +34,7 @@ function getAll() {
 function getRecipeById(_id) {
     var deferred = Q.defer();
  
-    db.collection('quotes').findOne({'_id': new mongodb.ObjectID(_id)}, (err, recipe) => {
+    db.collection(serverConfig.recipesCollection).findOne({'_id': new mongodb.ObjectID(_id)}, (err, recipe) => {
         deferred.resolve(recipe)
     })
 
@@ -42,7 +43,7 @@ function getRecipeById(_id) {
 
 function createRecipe(recipeParam){
     var deferred = Q.defer()
-    db.collection('quotes').save(recipeParam, (err, result) => {
+    db.collection(serverConfig.recipesCollection).save(recipeParam, (err, result) => {
        deferred.resolve()
     })
     return deferred.promise;
@@ -56,7 +57,7 @@ function updateRecipe(_id, recipeParam){
         quote: recipeParam.quote
     };
     
-    db.collection('quotes').update({'_id': new mongodb.ObjectID(_id)}, { $set: set }, (err, result) => {
+    db.collection(serverConfig.recipesCollection).update({'_id': new mongodb.ObjectID(_id)}, { $set: set }, (err, result) => {
         deferred.resolve()
      })
 
@@ -66,7 +67,7 @@ function updateRecipe(_id, recipeParam){
 function deleteRecipe(_id) {
     var deferred = Q.defer();
  
-    db.collection('quotes').deleteOne({'_id': new mongodb.ObjectID(_id)}, (err, result) => {
+    db.collection(serverConfig.recipesCollection).deleteOne({'_id': new mongodb.ObjectID(_id)}, (err, result) => {
         deferred.resolve()
     })
 
