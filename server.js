@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 
 // routes
 app.use('/recipes', require('./controllers/recipes.controller'));
+app.use('/categories', require('./controllers/categories.controller'));
 app.use('/files', require('./controllers/upload.controller'));
 
 // start server
