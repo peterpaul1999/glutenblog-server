@@ -15,6 +15,9 @@ MongoClient.connect(serverConfig.mongoDbConfig, function(err, database) {
 })
 
 service.createCategory = createCategory;
+service.deleteCategory = deleteCategory;
+service.getCategoryById = getCategoryById;
+service.updateCategory = updateCategory;
 service.getAll = getAll;
 
 module.exports = service;
@@ -33,5 +36,39 @@ function createCategory(categoryParam){
     db.collection(serverConfig.categoriesCollection).save(categoryParam, (err, result) => {
        deferred.resolve()
     })
+    return deferred.promise;
+}
+
+function deleteCategory(_id) {
+    var deferred = Q.defer();
+ 
+    db.collection(serverConfig.categoriesCollection).deleteOne({'_id': new mongodb.ObjectID(_id)}, (err, result) => {
+        deferred.resolve()
+    })
+
+    return deferred.promise;
+}
+
+function getCategoryById(_id) {
+    var deferred = Q.defer();
+ 
+    db.collection(serverConfig.categoriesCollection).findOne({'_id': new mongodb.ObjectID(_id)}, (err, category) => {
+        deferred.resolve(category)
+    })
+
+    return deferred.promise;
+}
+
+function updateCategory(_id, categoryParam){
+    var deferred = Q.defer()
+
+    var set = {
+        name: categoryParam.name
+    };
+    
+    db.collection(serverConfig.categoriesCollection).update({'_id': new mongodb.ObjectID(_id)}, { $set: set }, (err, result) => {
+        deferred.resolve()
+     })
+
     return deferred.promise;
 }
